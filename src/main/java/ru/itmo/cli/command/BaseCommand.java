@@ -11,5 +11,8 @@ public abstract class BaseCommand {
 
     }
 
+    public CommandData getCommandData() {
+        return data;
+    }
     private CommandData data;
 }
