@@ -1,9 +1,13 @@
 package ru.itmo.cli.descriptor;
 
 public class DefaultInDescriptor implements IDescriptor {
+    
+    /** 
+     * @param out
+     */
     @Override
-    public void write() {
-
+    public void write(String out) {
+        
     }
 
     @Override

@@ -5,8 +5,12 @@ public class FileDescriptor implements IDescriptor {
 
     }
 
+    
+    /** 
+     * @param out
+     */
     @Override
-    public void write() {
+    public void write(String out) {
 
     }
 

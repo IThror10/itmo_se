@@ -11,6 +11,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Interpreter {
+    /** 
+     * @param script
+     * @param state
+     * @return CommandData
+     */
     public CommandData launch(String script, AppState state) {
         CommandFactory factory = CommandFactory.createCommandFactory();
         IDescriptor stderr = new DefaultOutDescriptor();
