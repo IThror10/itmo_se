@@ -1,18 +1,28 @@
 package ru.itmo.cli.console;
 
-public class AppState {
-    public void setVar() {
+import java.util.HashMap;
+import java.util.Map;
 
+public class AppState {
+    private final Map<String, String> environmentVariables;
+    private String currentPath;
+
+    public AppState() {
+        this.environmentVariables = new HashMap<>();
+        this.currentPath = System.getProperty("user.dir");
+    }
+    public void setVar(String key, String value) {
+        environmentVariables.put(key, value);
     }
     public String getVar(String key) {
-        return null;
+        return environmentVariables.get(key);
     }
 
-    public void setPath() {
-
+    public void setPath(String newPath) {
+        currentPath = newPath;
     }
 
     public String getPath() {
-        return null;
+        return currentPath;
     }
 }
