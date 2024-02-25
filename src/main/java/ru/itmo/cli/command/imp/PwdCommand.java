@@ -2,7 +2,6 @@ package ru.itmo.cli.command.imp;
 
 import ru.itmo.cli.command.BaseCommand;
 import ru.itmo.cli.console.AppState;
-import ru.itmo.cli.descriptor.DefaultOutDescriptor;
 
 /**
  * Класс служит для вызова команды pwd.
@@ -19,7 +18,6 @@ public class PwdCommand extends BaseCommand {
 
     @Override
     public void execute() {
-        DefaultOutDescriptor output = new DefaultOutDescriptor();
-        output.write(state.getPath());
+        getCommandData().stdout().write(state.getPath());
     }
 }
