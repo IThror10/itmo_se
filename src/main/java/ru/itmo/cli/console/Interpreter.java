@@ -6,6 +6,12 @@ public class Interpreter {
     public Interpreter(AppState state) {
 
     }
+    
+    /** 
+     * @param script
+     * @param state
+     * @return CommandData
+     */
     public CommandData launch(String script, AppState state) {
         return null;
     }

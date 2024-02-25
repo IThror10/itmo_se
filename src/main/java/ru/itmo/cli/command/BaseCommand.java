@@ -7,6 +7,10 @@ import ru.itmo.cli.descriptor.IDescriptor;
 public abstract class BaseCommand {
     public abstract void execute();
 
+    /** 
+     * @param descriptor
+     * @param number
+     */
     public final void changeInOut(IDescriptor descriptor, int number) {
 
     }

@@ -5,6 +5,10 @@ import ru.itmo.cli.console.AppState;
 import java.util.function.BiFunction;
 
 public class CommandFactory {
+    
+    /** 
+     * @return CommandFactory
+     */
     public static CommandFactory createCommandFactory() {
         return null;
     }

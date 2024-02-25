@@ -29,5 +29,8 @@ replay_pid*
 # Ignore Gradle build output directory
 build
 
-# Ignore .idea dirrectory
+# Ignore .idea directory
 .idea
+
+# Ignore .vscode directory
+.vscode
