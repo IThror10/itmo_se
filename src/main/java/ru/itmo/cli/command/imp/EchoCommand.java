@@ -19,7 +19,7 @@ public class EchoCommand extends BaseCommand {
     @Override
     public void execute() {
         for (String argument : arguments) {
-            getCommandData().stdout().write(argument + " ");
+            getCommandData().getStdout().write(argument + " ");
         }
     }
 }

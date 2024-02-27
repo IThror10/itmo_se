@@ -18,6 +18,6 @@ public class PwdCommand extends BaseCommand {
 
     @Override
     public void execute() {
-        getCommandData().stdout().write(state.getPath());
+        getCommandData().getStdout().write(state.getPath());
     }
 }

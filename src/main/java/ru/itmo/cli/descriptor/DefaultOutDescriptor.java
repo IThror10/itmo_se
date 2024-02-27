@@ -1,17 +1,18 @@
 package ru.itmo.cli.descriptor;
-
 public class DefaultOutDescriptor implements IDescriptor {
-    
-    /** 
-     * @param out
-     */
+    private final StringBuilder buffer = new StringBuilder(); // Буфер для хранения данных
+
+    // Метод для записи строки в буфер, вместо непосредственной записи в стандартный поток вывода
     @Override
-    public void write(String out) {
-        System.out.print(out);
+    public void write(String data) {
+        buffer.append(data).append("\n"); // Добавление данных в буфер
     }
 
+    // Метод для чтения и очистки буфера
     @Override
     public String read() {
-        return null;
+        String result = buffer.toString(); // Получение текущего содержимого буфера
+        buffer.setLength(0); // Очистка буфера
+        return result; // Возвращение данных из буфера
     }
 }

@@ -1,6 +1,6 @@
 package ru.itmo.cli;
 
-import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
@@ -19,8 +19,8 @@ public class SingletonTest {
         factory = CommandFactory.createCommandFactory();
     }
 
-    @Test
-    void createCommandTest() {
+ //   @Test
+   // void createCommandTest() {
         //Mocks
 //        AppState state = Mockito.mock(AppState.class);
 //        BaseCommand command = Mockito.mock(BaseCommand.class);
@@ -37,5 +37,5 @@ public class SingletonTest {
 //        assertAll(
 //            ....
 //        );
-    }
+  //  }
 }

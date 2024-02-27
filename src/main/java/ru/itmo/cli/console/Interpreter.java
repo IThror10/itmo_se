@@ -35,7 +35,7 @@ public class Interpreter {
             for (Descriptor desc: args.getRedirect())
                 result.changeInOut(desc.descriptor(), desc.fileId());
             result.execute();
-            descriptors[0] = result.getCommandData().stdout();
+            descriptors[0] = result.getCommandData().getStdout();
         }
         return result.getCommandData();
     }
