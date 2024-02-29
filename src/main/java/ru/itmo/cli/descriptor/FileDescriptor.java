@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+
 public class FileDescriptor implements IDescriptor {
     private final String fileName;
     // Конструктор класса, принимающий имя файла
@@ -39,4 +40,10 @@ public class FileDescriptor implements IDescriptor {
         }
         return null; // В случае возникновения ошибки, возвращает null
     }
+
+    public boolean found() {
+        return true;
+    }
+
+    public String getFileName() { return fileName;}
 }
