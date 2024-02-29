@@ -11,11 +11,11 @@ import ru.itmo.cli.descriptor.IDescriptor;
 public class Console {
     public void work() {
         AppState appState = new AppState();
-        Interpreter interpreter = new Interpreter(appState);
+        Interpreter interpreter = new Interpreter();
         IDescriptor descriptor = new DefaultInDescriptor();
         while (true) {
             String script = descriptor.read();
-            descriptor = interpreter.launch(script).stdin();
+            descriptor = interpreter.launch(script, appState).stdin();
         }
     }
 }
