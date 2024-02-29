@@ -6,7 +6,7 @@ public class Interpreter {
     public Interpreter(AppState state) {
 
     }
-    public CommandData launch(String script, AppState state) {
+    public CommandData launch(String script) {
         return null;
     }
 }
