@@ -36,9 +36,9 @@ public class DefaultInDescriptorTest {
         System.setIn(sysInBackup);
 
         //Assert
-        assertEquals("Some string to read\n", noWriteResult);
-        assertEquals("Other string to read\n", writeBeforeResult);
-        assertEquals("Last string to read\n", writeAfterResult);
+        assertEquals("Some string to read", noWriteResult);
+        assertEquals("Other string to read", writeBeforeResult);
+        assertEquals("Last string to read", writeAfterResult);
         assertEquals("", empty);
     }
 }

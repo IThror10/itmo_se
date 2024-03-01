@@ -34,7 +34,7 @@ public class Console {
         String script, result;
         CommandData data;
         while (true) {
-            System.out.print("> ");
+            System.out.print("\n> ");
             script = scanner.nextLine();
             data = interpreter.launch(script, this.appState);
             if (data.getStatus() == CommandStatus.ERROR) {

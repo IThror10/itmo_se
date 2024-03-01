@@ -42,7 +42,7 @@ public class WcCommand extends BaseCommand {
             int totalWordNumber = 0;
             for (FileDescriptor fileDescriptor : this.files) {
                 if (!fileDescriptor.found()) {
-                    data.getStderr().write(String.format("wc : %s : No such file or directory", fileDescriptor.getFileName()));
+                    data.getStderr().write(String.format("wc : %s : No such file or directory\n", fileDescriptor.getFileName()));
                     data.setStatus(CommandStatus.ERROR);
                 } else {
                     String fileData = fileDescriptor.read();
@@ -52,17 +52,19 @@ public class WcCommand extends BaseCommand {
                     totalLineNumber += lineNumber;
                     totalSymbolNumber += symbolNumber;
                     totalWordNumber += wordNumber;
-                    data.getStdout().write(String.format("%s %s %s %s", lineNumber, wordNumber, symbolNumber, fileDescriptor.getFileName()));
+                    data.getStdout().write(String.format("%s %s %s %s\n", lineNumber, wordNumber, symbolNumber, fileDescriptor.getFileName()));
                 }
             }
             if (files.length > 1) {
-                data.getStdout().write(String.format("%s %s %s total", totalLineNumber, totalWordNumber, totalSymbolNumber));
+                data.getStdout().write(String.format("%s %s %s total\n", totalLineNumber, totalWordNumber, totalSymbolNumber));
             }
         } else {
-            while (true) {
-                String inputData = data.getStdin().read();
-                data.getStdout().write(inputData);
-            }
+            String inData = data.getStdin().read();
+            data.getStdout().write(String.format("%s %s %s\n",
+                    inData.split("\\n").length,
+                    inData.split("\\s+").length,
+                    inData.length()
+            ));
         }
     }
 }

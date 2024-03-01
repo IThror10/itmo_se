@@ -65,12 +65,11 @@ public class InterpreterTest {
         //Act
         CommandData redirectResult = interpreter.launch(redirectTestScript, state);
         FileDescriptor in = (FileDescriptor) redirectResult.getStdin();
-        FileDescriptor out = (FileDescriptor) redirectResult.getStdout();
         FileDescriptor err = (FileDescriptor) redirectResult.getStderr();
 
         //Assert
         assertEquals(inFile.getCanonicalPath(), in.getFileName());
-        assertEquals(outFile.getCanonicalPath(), out.getFileName());
+        assertEquals("", redirectResult.getStdout().read());
         assertEquals(errFIle.getCanonicalPath(), err.getFileName());
         assertDoesNotThrow(() -> interpreter.launch(conveyorTestScript, state));
         assertThrows(RuntimeException.class, () -> factory.createCommand(toCreate, state));

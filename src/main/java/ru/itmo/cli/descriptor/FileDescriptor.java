@@ -15,8 +15,9 @@ public class FileDescriptor implements IDescriptor {
      * @param path     The path of the file.
      */
     public FileDescriptor(String fileName, String path) {
-        fileName = fileName.startsWith("/") || path == null ? fileName : path + "/" + fileName;
         this.fileName = fileName;
+        this.filePathName = fileName.startsWith("/") || path == null ? fileName : path + "/" + fileName;
+
         File file = new File(fileName);
         found = file.exists();
     }
@@ -29,7 +30,7 @@ public class FileDescriptor implements IDescriptor {
     @Override
     public void write(String data) {
         try {
-            writer = new FileWriter(fileName, writer != null);
+            writer = new FileWriter(filePathName, writer != null);
             writer.write(data);
             writer.close();
         } catch (IOException e) {
@@ -45,7 +46,7 @@ public class FileDescriptor implements IDescriptor {
     @Override
     public String read() {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(fileName));
+            BufferedReader reader = new BufferedReader(new FileReader(filePathName));
             StringBuilder content = new StringBuilder();
             String line;
 
@@ -79,7 +80,8 @@ public class FileDescriptor implements IDescriptor {
     }
 
     private final String fileName;
-    private boolean found;
+    private final String filePathName;
+    private final boolean found;
     private FileWriter writer = null;
 }
 

@@ -28,7 +28,12 @@ public class PwdCommand extends BaseCommand {
      */
     @Override
     public void execute() {
-        data.setStatus(CommandStatus.SUCCESS);
-        getCommandData().getStdout().write(state.getPath());
+        if (args.length > 1) {
+            getCommandData().setStatus(CommandStatus.ERROR);
+            getCommandData().getStderr().write("Wrong args amount for Pwd Command");
+        } else {
+            data.setStatus(CommandStatus.SUCCESS);
+            getCommandData().getStdout().write(state.getPath());
+        }
     }
 }
