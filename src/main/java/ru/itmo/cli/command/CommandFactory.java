@@ -4,22 +4,27 @@ import ru.itmo.cli.console.AppState;
 import java.util.ArrayList;
 import java.util.function.BiFunction;
 
+/**
+ * CommandFactory class represents a factory for creating command instances based on arguments.
+ */
 public class CommandFactory {
     private static CommandFactory instance; // Статическое поле для хранения единственного экземпляра класса
     private final ArrayList<String> regexList; // Список регулярных выражений для сопоставления с названием команды
     private final ArrayList<BiFunction<String[], AppState, BaseCommand>> constructorList; //Список конструкторов команд
     private BiFunction<String[], AppState, BaseCommand> external;
 
-    //Приватный конструктор класса
+    /**
+     * Private constructor of the CommandFactory class.
+     */
     private CommandFactory() {
         regexList = new ArrayList<>();
         constructorList = new ArrayList<>();
     }
 
     /**
+     * Static method to create the single instance of CommandFactory.
      * @return CommandFactory
      */
-    // Статический метод для создания единственного экземпляра CommandFactory
     public static synchronized CommandFactory createCommandFactory() {
         if (instance == null) {
             instance = new  CommandFactory();
@@ -27,28 +32,38 @@ public class CommandFactory {
         return instance;
     }
 
-    // Метод для создания экземпляра команды на основе переданных аргументов
+    /**
+     * Create a command instance based on the provided command name and command arguments
+     * If there is no command with the received name, the external command is used.
+     * @param args The arguments for creating the command
+     * @param state The current application state
+     * @return BaseCommand The created command instance
+     */
     public BaseCommand createCommand(String[] args, AppState state) {
-        // Извлекаем первый элемент массива аргументов
         String commandName = args[0];
 
-        // Проверяем совпадение с элементами из списка regexList
         for (int i = 0; i < regexList.size(); i++) {
             if (commandName.matches(regexList.get(i))) {
-                // Если регулярное выражение совпадает, возвращаем соответствующий конструктор
                 return constructorList.get(i).apply(args, state);
             }
         }
-        // Если не найдено совпадение, возвращаем конструктор для ExternalCommand
         return external.apply(args, state);
     }
 
-    // Метод для регистрации регулярного выражения и конструктора команды
+    /**
+     * Register a regular expression and a command constructor.
+     * @param regex The regular expression for matching the command name
+     * @param constructor The constructor function for creating the command
+     */
     public void registerCommand(String regex, BiFunction<String[], AppState, BaseCommand> constructor) {
         regexList.add(regex);
         constructorList.add(constructor);
     }
 
+    /**
+     * Register an external command constructor.
+     * @param constructor The constructor function for creating external commands
+     */
     public void registerExternal(BiFunction<String[], AppState, BaseCommand> constructor) {
         external = constructor;
     }

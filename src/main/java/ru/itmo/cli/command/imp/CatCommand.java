@@ -5,16 +5,22 @@ import ru.itmo.cli.command.CommandStatus;
 import ru.itmo.cli.console.AppState;
 import ru.itmo.cli.descriptor.FileDescriptor;
 
-
 /**
- * cat command class
- * this command accepts the list of files, concatenate content of files and display it
- * if no files have been passed
- * command enters interactive mode and "repeat" every entered line until EOF is passed
+ * Cat command class.
+ * This command accepts a list of files, concatenates the content of the files, and displays it.
+ * If no files have been passed, the command enters interactive mode and repeats every entered line until EOF is passed.
  */
 public class CatCommand extends BaseCommand {
     private final FileDescriptor[] files;
 
+    /**
+     * Constructor for the CatCommand class.
+     * Takes an array of arguments and the application state as parameters.
+     * Creates file Descriptors for each received file.
+     *
+     * @param args  The arguments passed to the command.
+     * @param state The current application state.
+     */
     public CatCommand(String[] args, AppState state) {
         this.files = new FileDescriptor[args.length - 1];
         for (int i = 0; i < this.files.length; i++) {
@@ -22,6 +28,11 @@ public class CatCommand extends BaseCommand {
         }
     }
 
+    /**
+     * Executes the CatCommand.
+     * Concatenates and passes the content of files to the stdout descriptor
+     * or enters interactive mode if no files are provided.
+     */
     @Override
     public void execute() {
         data.setStatus(CommandStatus.SUCCESS);

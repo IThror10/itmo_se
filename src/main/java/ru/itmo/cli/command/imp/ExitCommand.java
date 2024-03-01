@@ -6,16 +6,25 @@ import ru.itmo.cli.console.AppState;
 
 
 /**
- * Exit command class
- * exits the program
+ * ExitCommand class for exiting the CLI application.
  */
 public class ExitCommand extends BaseCommand {
     private final String[] args;
 
+    /**
+     * Constructor for ExitCommand. Initializes the command with the specified arguments.
+     * @param args The arguments passed to the command
+     * @param state The current application state
+     */
     public ExitCommand(String[] args, AppState state) {
         this.args = args;
     }
 
+    /**
+     * Executes the ExitCommand.
+     * Updates the CommandStatus based on the execution result.
+     * If the command was successfully executed, it sets the status to EXIT.
+     */
     @Override
     public void execute() {
         if (args.length > 1) {

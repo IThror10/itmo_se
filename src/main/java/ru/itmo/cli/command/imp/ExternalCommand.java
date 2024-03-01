@@ -9,20 +9,25 @@ import ru.itmo.cli.command.BaseCommand;
 import ru.itmo.cli.console.AppState;
 
 /**
- * Класс служит для вызова внешних команд.
- * Если введено что-то, чего интерпретатор не знает -- вызов внешней программы.
+ * The ExternalCommand class is used to execute external commands.
+ * If something unknown is entered, the interpreter calls an external program.
  */
 public class ExternalCommand extends BaseCommand {
     private final String[] args;
     private final AppState state;
 
+    /**
+     * Constructs an ExternalCommand with the specified arguments and application state.
+     * @param args The arguments for the external command
+     * @param state The current application state
+     */
     public ExternalCommand(String[] args, AppState state) {
         this.args = args;
         this.state = state;
     }
 
     /**
-     * Хотим вызвать несуществующие команды в другом месте.
+     * Executes the external command.
      */
     @Override
     public void execute() {

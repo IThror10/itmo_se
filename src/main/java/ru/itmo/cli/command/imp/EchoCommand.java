@@ -5,18 +5,27 @@ import ru.itmo.cli.command.CommandStatus;
 import ru.itmo.cli.console.AppState;
 
 /**
- * Класс служит для вызова команды echo.
- * echo --- выводит на экран свой аргумент (или аргументы).
+ * Echo command class.
+ * This command accepts a list of arguments, concatenates them with spaces, and displays the result.
  */
 public class EchoCommand extends BaseCommand {
     private final String[] arguments;
-    private AppState state;
-    
+
+    /**
+     * Constructor for EchoCommand.
+     * Initializes the EchoCommand with the given arguments.
+     *
+     * @param args  The arguments passed to the command.
+     * @param state The current application state.
+     */
     public EchoCommand(String[] args, AppState state) {
         this.arguments = args;
-        this.state = state;
     }
 
+    /**
+     * Executes the EchoCommand.
+     * Concatenates the arguments with spaces and passes the result to the stdout descriptor.
+     */
     @Override
     public void execute() {
         data.setStatus(CommandStatus.SUCCESS);

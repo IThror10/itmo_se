@@ -6,17 +6,21 @@ import ru.itmo.cli.console.AppState;
 import ru.itmo.cli.descriptor.FileDescriptor;
 
 /**
- * wc command class
- * this command accepts the list of files
- * and display number of lines, number of words and number of symbols in each file
- * if more than one file was passed
- * it also display the sum of lines number, words number and symbols number in all files
- * if no files have been passed
- * command enters interactive mode
+ * This class represents the 'wc' command
+ * which is used to display the number of lines, words, and characters in files or standard input.
+ * It extends the BaseCommand class and implements the execute method to perform the wc command functionality.
  */
 public class WcCommand extends BaseCommand {
     private final FileDescriptor[] files;
 
+    /**
+     * Constructor for the WcCommand class
+     * Takes an array of arguments and the application state as parameters.
+     * Creates file Descriptors for each received file.
+     *
+     * @param args   Array of arguments passed to the wc command
+     * @param state  The current state of the application
+     */
     public WcCommand(String[] args, AppState state) {
         this.files = new FileDescriptor[args.length - 1];
         for (int i = 0; i < this.files.length; i++) {
@@ -24,6 +28,11 @@ public class WcCommand extends BaseCommand {
         }
     }
 
+    /**
+     * Executes the wc command
+     * Counts the number of lines, words, and characters in each received file or in standard input.
+     * Updates the CommandStatus based on the execution result.
+     */
     @Override
     public void execute() {
         data.setStatus(CommandStatus.SUCCESS);
