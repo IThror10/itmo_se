@@ -8,6 +8,7 @@ public class CommandFactory {
     private static CommandFactory instance; // Статическое поле для хранения единственного экземпляра класса
     private final ArrayList<String> regexList; // Список регулярных выражений для сопоставления с названием команды
     private final ArrayList<BiFunction<String[], AppState, BaseCommand>> constructorList; //Список конструкторов команд
+    private BiFunction<String[], AppState, BaseCommand> external;
 
     //Приватный конструктор класса
     private CommandFactory() {
@@ -33,19 +34,23 @@ public class CommandFactory {
 
         // Проверяем совпадение с элементами из списка regexList
         for (int i = 0; i < regexList.size(); i++) {
-            if (commandName.equals(regexList.get(i))) {
+            if (commandName.matches(regexList.get(i))) {
                 // Если регулярное выражение совпадает, возвращаем соответствующий конструктор
                 return constructorList.get(i).apply(args, state);
             }
         }
         // Если не найдено совпадение, возвращаем конструктор для ExternalCommand
-        return constructorList.get(regexList.size() - 1).apply(args, state);
+        return external.apply(args, state);
     }
 
     // Метод для регистрации регулярного выражения и конструктора команды
     public void registerCommand(String regex, BiFunction<String[], AppState, BaseCommand> constructor) {
         regexList.add(regex);
         constructorList.add(constructor);
+    }
+
+    public void registerExternal(BiFunction<String[], AppState, BaseCommand> constructor) {
+        external = constructor;
     }
 
 }

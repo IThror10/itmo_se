@@ -1,6 +1,7 @@
 package ru.itmo.cli.command.imp;
 
 import ru.itmo.cli.command.BaseCommand;
+import ru.itmo.cli.command.CommandStatus;
 import ru.itmo.cli.console.AppState;
 
 /**
@@ -18,6 +19,7 @@ public class EchoCommand extends BaseCommand {
 
     @Override
     public void execute() {
+        data.setStatus(CommandStatus.SUCCESS);
         for (String argument : arguments) {
             getCommandData().getStdout().write(argument + " ");
         }

@@ -1,6 +1,7 @@
 package ru.itmo.cli.command.imp;
 
 import ru.itmo.cli.command.BaseCommand;
+import ru.itmo.cli.command.CommandStatus;
 import ru.itmo.cli.console.AppState;
 
 
@@ -19,6 +20,7 @@ public class ExitCommand extends BaseCommand {
     public void execute() {
         if (args.length > 1) {
             data.getStderr().write("bash: exit: too many arguments");
+            data.setStatus(CommandStatus.ERROR);
             return;
         }
         data.getStdin().write("exit");
@@ -26,9 +28,9 @@ public class ExitCommand extends BaseCommand {
             try {
                 Integer.parseInt(args[0]);
             } catch (NumberFormatException e) {
-                data.getStderr().write(String.format("bash: exit: %s: numeric argument required", args[0]));
+                data.getStdout().write(String.format("bash: exit: %s: numeric argument required", args[0]));
             }
         }
-        System.exit(0);
+        data.setStatus(CommandStatus.EXIT);
     }
 }

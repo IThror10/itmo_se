@@ -1,7 +1,11 @@
 package ru.itmo.cli.console;
 
-import ru.itmo.cli.descriptor.DefaultInDescriptor;
-import ru.itmo.cli.descriptor.IDescriptor;
+import ru.itmo.cli.command.CommandData;
+import ru.itmo.cli.command.CommandFactory;
+import ru.itmo.cli.command.CommandStatus;
+import ru.itmo.cli.command.imp.*;
+
+import java.util.Scanner;
 
 /**
  * Console class
@@ -9,13 +13,39 @@ import ru.itmo.cli.descriptor.IDescriptor;
  * It reads commands entered by user and pass them to the interpreter which executes the commands
  */
 public class Console {
+    private final AppState appState;
+
+    public Console() {
+        this.appState = new AppState();
+        CommandFactory factory = CommandFactory.createCommandFactory();
+        factory.registerExternal(ExternalCommand::new);
+        factory.registerCommand("cat", CatCommand::new);
+        factory.registerCommand("echo", EchoCommand::new);
+        factory.registerCommand("exit", ExitCommand::new);
+        factory.registerCommand("pwd", PwdCommand::new);
+        factory.registerCommand("wc", WcCommand::new);
+    }
+
     public void work() {
-        AppState appState = new AppState();
+        this.appState.setPath(System.getProperty("user.dir"));
         Interpreter interpreter = new Interpreter();
-        IDescriptor descriptor = new DefaultInDescriptor();
+        Scanner scanner = new Scanner(System.in);
+        String script, result;
+        CommandData data;
         while (true) {
-            String script = descriptor.read();
-            descriptor = interpreter.launch(script, appState).getStdin();
+            System.out.print("> ");
+            script = scanner.nextLine();
+            data = interpreter.launch(script, this.appState);
+            if (data.getStatus() == CommandStatus.ERROR) {
+                data.getStdin().read();
+                result = data.getStderr().read() + data.getStdout().read();
+            } else {
+                result = data.getStdout().read();
+            }
+            System.out.print(result);
+            if (data.getStatus() == CommandStatus.EXIT) {
+                System.exit(0);
+            }
         }
     }
 }

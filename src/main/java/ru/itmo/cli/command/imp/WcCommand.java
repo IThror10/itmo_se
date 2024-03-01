@@ -1,6 +1,7 @@
 package ru.itmo.cli.command.imp;
 
 import ru.itmo.cli.command.BaseCommand;
+import ru.itmo.cli.command.CommandStatus;
 import ru.itmo.cli.console.AppState;
 import ru.itmo.cli.descriptor.FileDescriptor;
 
@@ -25,6 +26,7 @@ public class WcCommand extends BaseCommand {
 
     @Override
     public void execute() {
+        data.setStatus(CommandStatus.SUCCESS);
         if (this.files.length > 0) {
             int totalSymbolNumber = 0;
             int totalLineNumber = 0;
@@ -32,6 +34,7 @@ public class WcCommand extends BaseCommand {
             for (FileDescriptor fileDescriptor : this.files) {
                 if (!fileDescriptor.found()) {
                     data.getStderr().write(String.format("wc : %s : No such file or directory", fileDescriptor.getFileName()));
+                    data.setStatus(CommandStatus.ERROR);
                 } else {
                     String fileData = fileDescriptor.read();
                     int symbolNumber = fileData.length();

@@ -1,6 +1,7 @@
 package ru.itmo.cli.command.imp;
 
 import ru.itmo.cli.command.BaseCommand;
+import ru.itmo.cli.command.CommandStatus;
 import ru.itmo.cli.console.AppState;
 import ru.itmo.cli.descriptor.FileDescriptor;
 
@@ -23,10 +24,12 @@ public class CatCommand extends BaseCommand {
 
     @Override
     public void execute() {
+        data.setStatus(CommandStatus.SUCCESS);
         if (this.files.length > 0) {
             for (FileDescriptor fileDescriptor : this.files) {
                 if (!fileDescriptor.found()) {
                     data.getStderr().write(String.format("cat : %s : No such file or directory", fileDescriptor.getFileName()));
+                    data.setStatus(CommandStatus.ERROR);
                 } else {
                     String fileData = fileDescriptor.read();
                     data.getStdout().write(fileData);
