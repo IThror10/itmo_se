@@ -64,7 +64,7 @@ public class CommandFactory {
      * Register an external command constructor.
      * @param constructor The constructor function for creating external commands
      */
-    public void registerExternal(BiFunction<String[], AppState, BaseCommand> constructor) {
+    public void registerDefault(BiFunction<String[], AppState, BaseCommand> constructor) {
         external = constructor;
     }
 

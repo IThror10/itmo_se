@@ -1,49 +1,85 @@
 package ru.itmo.cli.descriptor;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
+
+/**
+ * The FileDescriptor class implements the IDescriptor interface to provide functionality
+ * for writing and reading data to/from a file.
+ */
 public class FileDescriptor implements IDescriptor {
-    private final String fileName;
-    // Конструктор класса, принимающий имя файла
-    public FileDescriptor(String fileName) {
+    /**
+     * Constructs a FileDescriptor object with the specified file name and path.
+     *
+     * @param fileName The name of the file.
+     * @param path     The path of the file.
+     */
+    public FileDescriptor(String fileName, String path) {
+        fileName = fileName.startsWith("/") || path == null ? fileName : path + "/" + fileName;
         this.fileName = fileName;
+        File file = new File(fileName);
+        found = file.exists();
     }
 
-    // Метод для записи данных в файл
+    /**
+     * Writes the provided data to the file.
+     *
+     * @param data The data to be written.
+     */
     @Override
     public void write(String data) {
         try {
-            FileWriter writer = new FileWriter(fileName); // Создание объекта FileWriter для записи данных в файл
-            writer.write(data); // Запись данных в файл
-            writer.close(); // Закрытие потока записи
-        } catch (IOException e) { // Обработка исключения IOException
+            writer = new FileWriter(fileName, writer != null);
+            writer.write(data);
+            writer.close();
+        } catch (IOException e) {
+            // Ignore IOException
         }
     }
 
-    // Метод для чтения данных из файла
+    /**
+     * Reads data from the file.
+     *
+     * @return The data read from the file.
+     */
     @Override
     public String read() {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(fileName)); // Создание объекта BufferedReader для чтения данных из файла
-            StringBuilder content = new StringBuilder(); // Создание объекта StringBuilder для сохранения данных из файла
+            BufferedReader reader = new BufferedReader(new FileReader(fileName));
+            StringBuilder content = new StringBuilder();
             String line;
-            // Чтение строк из файла и добавление строки в объект StringBuilder
+
             while ((line = reader.readLine()) != null) {
                 content.append(line).append("\n");
             }
-            reader.close(); // Закрытие потока чтения
-            return content.toString(); // Возвращение данных в виде строки
-        } catch (IOException e) { // Обработка исключения IOException
+            reader.close();
+            return content.toString();
+        } catch (IOException e) {
+            // Ignore IOException
         }
-        return null; // В случае возникновения ошибки, возвращает null
+        return null;
     }
 
+    /**
+     * Indicates whether the file was found.
+     *
+     * @return true if the file was found, otherwise false.
+     */
     public boolean found() {
-        return true;
+        return found;
     }
 
-    public String getFileName() { return fileName;}
+    /**
+     * Gets the file name.
+     *
+     * @return The file name.
+     */
+    public String getFileName() {
+        return fileName;
+    }
+
+    private final String fileName;
+    private boolean found;
+    private FileWriter writer = null;
 }
+

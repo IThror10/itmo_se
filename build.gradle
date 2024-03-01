@@ -14,14 +14,21 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
 
     testImplementation 'net.bytebuddy:byte-buddy:1.14.8'
-//    testImplementation 'org.mockito:mockito-inline:5.10.0'
     testImplementation 'org.mockito:mockito-junit-jupiter:5.10.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
 }
 
 application {
-    mainClass = 'ru.itmo.console.Console'
+    mainClass = 'ru.itmo.cli.App'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'ru.itmo.cli.App'
+        )
+    }
 }
 
 test {

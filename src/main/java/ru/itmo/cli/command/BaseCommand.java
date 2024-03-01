@@ -8,7 +8,7 @@ import ru.itmo.cli.descriptor.IDescriptor;
 */
 @Data
 public abstract class BaseCommand {
-    protected CommandData data; // Приватное поле для хранения данных команды\
+    protected CommandData data = new CommandData(); // Приватное поле для хранения данных команды\
 
     /**
      * Abstract method to execute the command.

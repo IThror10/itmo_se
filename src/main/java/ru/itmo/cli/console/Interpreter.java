@@ -4,16 +4,24 @@ import lombok.Data;
 import ru.itmo.cli.command.BaseCommand;
 import ru.itmo.cli.command.CommandData;
 import ru.itmo.cli.command.CommandFactory;
+import ru.itmo.cli.command.imp.PassCommand;
 import ru.itmo.cli.descriptor.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Класс-интерпретатор пользовательского выражения
+ */
 public class Interpreter {
-    /** 
-     * @param script
-     * @param state
+    /**
+     * Выполняет скрипт, переданный в виде строки на определенном состоянии программы
+     * Использует Parser для выделения токенов и выполнения подстановок
+     *
+     * @param script "echo data | wc | cat" (Скрипт, введенный пользоваталем. Пример -- echo data | wc | cat)
+     * @param state (Полученное состояние консоли)
      * @return CommandData
      */
     public CommandData launch(String script, AppState state) {
@@ -31,7 +39,11 @@ public class Interpreter {
             descriptors[1] = new DefaultOutDescriptor();
             descriptors[2] = stderr;
 
-            result = factory.createCommand(args.getArgs().toArray(new String[args.getArgs().size()]), state);
+            String[] arrArgs = args.getArgs().toArray(new String[args.getArgs().size()]);
+            result = arrArgs.length == 0 ? new PassCommand() : factory.createCommand(arrArgs, state);
+
+            for (int i = 0; i < 3; i++)
+                result.changeInOut(descriptors[i], i);
             for (Descriptor desc: args.getRedirect())
                 result.changeInOut(desc.descriptor(), desc.fileId());
             result.execute();
@@ -52,7 +64,7 @@ public class Interpreter {
             else {
                 result.getRedirect().add(new Descriptor(
                         map.get(args.get(i)),
-                        new FileDescriptor(args.get(i + 1))
+                        new FileDescriptor(args.get(i + 1), state.getPath())
                 ));
                 i += 1;
             }
@@ -66,15 +78,15 @@ public class Interpreter {
         map.put(">", 1);
         map.put("2>", 2);
     }
-}
 
-@Data
-class Args {
-    private List<Descriptor> redirect;
-    private List<String> args;
-}
+    @Data
+    static class Args {
+        private List<Descriptor> redirect = new ArrayList<>();
+        private List<String> args = new ArrayList<>();
+    }
 
-record Descriptor(
-        int fileId,
-        IDescriptor descriptor
-) { }
+    record Descriptor(
+            int fileId,
+            IDescriptor descriptor
+    ) { }
+}

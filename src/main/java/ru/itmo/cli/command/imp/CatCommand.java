@@ -24,7 +24,7 @@ public class CatCommand extends BaseCommand {
     public CatCommand(String[] args, AppState state) {
         this.files = new FileDescriptor[args.length - 1];
         for (int i = 0; i < this.files.length; i++) {
-            this.files[i] = new FileDescriptor(args[i + 1]);
+            this.files[i] = new FileDescriptor(args[i + 1], state.getPath());
         }
     }
 

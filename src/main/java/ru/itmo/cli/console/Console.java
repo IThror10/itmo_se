@@ -18,12 +18,13 @@ public class Console {
     public Console() {
         this.appState = new AppState();
         CommandFactory factory = CommandFactory.createCommandFactory();
-        factory.registerExternal(ExternalCommand::new);
+        factory.registerDefault(ExternalCommand::new);
         factory.registerCommand("cat", CatCommand::new);
         factory.registerCommand("echo", EchoCommand::new);
         factory.registerCommand("exit", ExitCommand::new);
         factory.registerCommand("pwd", PwdCommand::new);
         factory.registerCommand("wc", WcCommand::new);
+        factory.registerCommand(".+=.*", SetVarCommand::new);
     }
 
     public void work() {
