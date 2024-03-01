@@ -27,8 +27,9 @@ public class Interpreter {
     public CommandData launch(String script, AppState state) {
         CommandFactory factory = CommandFactory.createCommandFactory();
         IDescriptor stderr = new DefaultOutDescriptor();
+        IDescriptor stdout = null;
         IDescriptor descriptors[] = {
-                new DefaultInDescriptor(),  //In == [0]
+                new DefaultOutDescriptor(),  //In == [0]
                 null,                       //Out == [1]
                 null  //Err == [2]
         };
@@ -36,7 +37,8 @@ public class Interpreter {
         BaseCommand result = null;
         for (String command: Parser.conveyorSplit(script)) {
             Args args = parseArgs(Parser.argsSplit(command), state);
-            descriptors[1] = new DefaultOutDescriptor();
+            stdout = new DefaultOutDescriptor();
+            descriptors[1] = stdout;
             descriptors[2] = stderr;
 
             String[] arrArgs = args.getArgs().toArray(new String[args.getArgs().size()]);
@@ -49,6 +51,7 @@ public class Interpreter {
             result.execute();
             descriptors[0] = result.getCommandData().getStdout();
         }
+        result.getCommandData().setStdout(stdout);
         return result.getCommandData();
     }
 

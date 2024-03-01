@@ -1,6 +1,9 @@
-package ru.itmo.cli.command;
+package ru.itmo.cli.command.impl;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import ru.itmo.cli.command.BaseCommand;
+import ru.itmo.cli.command.CommandStatus;
 import ru.itmo.cli.command.imp.SetVarCommand;
 import ru.itmo.cli.console.AppState;
 import ru.itmo.cli.descriptor.DefaultOutDescriptor;
@@ -35,7 +38,7 @@ public class SetVarCommandTest {
 
         //Assert
         assertAll(
-                () -> assertEquals(CommandStatus.SUCCESS, commands[0].getCommandData().getStatus()),
+                () -> Assertions.assertEquals(CommandStatus.SUCCESS, commands[0].getCommandData().getStatus()),
                 () -> assertEquals("data text", state.getVar("val1"))
         );
         assertAll(

@@ -39,7 +39,7 @@ public class CatCommand extends BaseCommand {
         if (this.files.length > 0) {
             for (FileDescriptor fileDescriptor : this.files) {
                 if (!fileDescriptor.found()) {
-                    data.getStderr().write(String.format("cat : %s : No such file or directory", fileDescriptor.getFileName()));
+                    data.getStderr().write(String.format("cat : %s : No such file or directory\n", fileDescriptor.getFileName()));
                     data.setStatus(CommandStatus.ERROR);
                 } else {
                     String fileData = fileDescriptor.read();
@@ -47,10 +47,8 @@ public class CatCommand extends BaseCommand {
                 }
             }
         } else {
-            while (true) {
-                String inputData = data.getStdout().read();
-                data.getStdout().write(inputData);
-            }
+            String inputData = data.getStdin().read();
+            data.getStdout().write(inputData);
         }
     }
 }

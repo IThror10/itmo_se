@@ -1,8 +1,12 @@
 package ru.itmo.cli.descriptor;
 
+import ru.itmo.cli.command.CommandData;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 /**
  * The DefaultInDescriptor class implements the IDescriptor interface to provide functionality
@@ -29,16 +33,15 @@ public class DefaultInDescriptor implements IDescriptor {
     @Override
     public String read() {
         StringBuilder input = new StringBuilder();
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            String line;
+        Scanner scanner = new Scanner(System.in);
 
-            while ((line = reader.readLine()) != null) {
-                input.append(line).append("\n");
-            }
-        } catch (IOException e) {
-            // Handle IOException
-        }
+        try {
+            String line = scanner.nextLine();
+            input.append(line);
+        } catch (NoSuchElementException e) {}
+
+        scanner.close();
+
         return input.toString();
     }
 }
