@@ -19,7 +19,8 @@ public class EchoCommand extends BaseCommand {
      * @param state The current application state.
      */
     public EchoCommand(String[] args, AppState state) {
-        this.arguments = args;
+        arguments = new String[args.length - 1];
+        System.arraycopy(args, 1, arguments, 0, args.length - 1);
     }
 
     /**
@@ -29,8 +30,11 @@ public class EchoCommand extends BaseCommand {
     @Override
     public void execute() {
         data.setStatus(CommandStatus.SUCCESS);
-        for (String argument : arguments) {
-            getCommandData().getStdout().write(argument + " ");
+        for (int i = 0; i < arguments.length; i++) {
+            data.getStdout().write(arguments[i]);
+            if (i != arguments.length - 1) {
+                data.getStdout().write(" ");
+            }
         }
     }
 }

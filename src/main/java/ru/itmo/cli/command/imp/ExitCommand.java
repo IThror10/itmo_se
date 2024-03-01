@@ -17,7 +17,8 @@ public class ExitCommand extends BaseCommand {
      * @param state The current application state
      */
     public ExitCommand(String[] args, AppState state) {
-        this.args = args;
+        this.args = new String[args.length - 1];
+        System.arraycopy(args, 1, this.args, 0, args.length - 1);
     }
 
     /**
@@ -28,18 +29,18 @@ public class ExitCommand extends BaseCommand {
     @Override
     public void execute() {
         if (args.length > 1) {
-            data.getStderr().write("bash: exit: too many arguments");
+            data.getStderr().write("exit: too many arguments");
             data.setStatus(CommandStatus.ERROR);
             return;
         }
-        data.getStdin().write("exit");
         if (args.length == 1) {
             try {
                 Integer.parseInt(args[0]);
             } catch (NumberFormatException e) {
-                data.getStdout().write(String.format("bash: exit: %s: numeric argument required", args[0]));
+                data.getStderr().write(String.format("exit: %s: numeric argument required", args[0]));
             }
         }
+        data.getStdout().write("exit");
         data.setStatus(CommandStatus.EXIT);
     }
 }
