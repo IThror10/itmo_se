@@ -25,6 +25,8 @@ public class Console {
         factory.registerCommand("pwd", PwdCommand::new);
         factory.registerCommand("wc", WcCommand::new);
         factory.registerCommand(".+=.*", SetVarCommand::new);
+        factory.registerCommand("ls", LsCommand::new);
+        factory.registerCommand("cd", CdCommand::new);
     }
 
     public void work() {
