@@ -24,6 +24,7 @@ public class Console {
         factory.registerCommand("exit", ExitCommand::new);
         factory.registerCommand("pwd", PwdCommand::new);
         factory.registerCommand("wc", WcCommand::new);
+        factory.registerCommand("grep", GrepCommand::new);
         factory.registerCommand(".+=.*", SetVarCommand::new);
     }
 
