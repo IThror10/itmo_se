@@ -9,7 +9,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+/**
+ * Command that performs grep-like text search operations.
+ * This command searches for a given pattern in text input (or files) and prints matching lines.
+ */
 public class GrepCommand extends BaseCommand {
+    /**
+     * Constructs a GrepCommand object with provided arguments.
+     *
+     * @param args  Command-line arguments for the grep command
+     * @param state Application state to access paths and settings
+     */
 
     public GrepCommand(String[] args, AppState state) {
         int i = 1;
@@ -52,6 +62,10 @@ public class GrepCommand extends BaseCommand {
         }
     }
 
+    /**
+     * Executes the grep command logic.
+     * This method performs the search operation and writes results to stdout or stderr.
+     */
     @Override
     public void execute() {
         if (errorMsg != null) {
