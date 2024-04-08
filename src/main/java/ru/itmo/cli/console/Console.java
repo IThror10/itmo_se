@@ -26,6 +26,8 @@ public class Console {
         factory.registerCommand("wc", WcCommand::new);
         factory.registerCommand("grep", GrepCommand::new);
         factory.registerCommand(".+=.*", SetVarCommand::new);
+        factory.registerCommand("ls", LsCommand::new);
+        factory.registerCommand("cd", CdCommand::new);
     }
 
     public void work() {
